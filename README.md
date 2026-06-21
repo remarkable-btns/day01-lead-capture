@@ -4,6 +4,8 @@
 > Part of my **30-Day Automation Portfolio** — one production-ready automation per day,  
 > targeting real business problems in the Japanese market.
 
+<img width="1212" height="609" alt="lead_automation_workflow" src="https://github.com/user-attachments/assets/9b1e5263-628d-4476-9d16-e6dd783590a0" />
+
 ---
 
 ## What It Does / 概要
