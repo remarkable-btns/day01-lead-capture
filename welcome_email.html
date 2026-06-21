@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>お問い合わせありがとうございます</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background-color: #f0f2f5;
+      font-family: 'Helvetica Neue', 'Hiragino Sans', 'Yu Gothic', Arial, sans-serif;
+      color: #222222;
+      padding: 40px 16px;
+    }
+
+    .wrapper {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* ── Header ── */
+    .header {
+      background-color: #2c2c2c;
+      border-radius: 12px 12px 0 0;
+      padding: 40px 48px 36px;
+      text-align: center;
+    }
+
+    .header .brand {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #0155be;
+      margin-bottom: 16px;
+    }
+
+    .header h1 {
+      font-size: 26px;
+      font-weight: 300;
+      color: #f0f2f5;
+      line-height: 1.5;
+      letter-spacing: 0.03em;
+    }
+
+    .header h1 strong {
+      font-weight: 700;
+      color: #0155be;
+    }
+
+    /* ── Body ── */
+    .body {
+      background-color: #f0f2f5;
+      padding: 48px;
+    }
+
+    .greeting {
+      font-size: 18px;
+      font-weight: 600;
+      color: #0f1923;
+      margin-bottom: 20px;
+    }
+
+    .message-text {
+      font-size: 15px;
+      line-height: 1.9;
+      color: #444;
+      margin-bottom: 32px;
+    }
+
+    /* ── Inquiry Summary Box ── */
+    .summary-box {
+      background-color: #f8f8f5;
+      border-left: 3px solid #0155be;
+      border-radius: 0 8px 8px 0;
+      padding: 24px 28px;
+      margin-bottom: 36px;
+    }
+
+    .summary-box .summary-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #0155be;
+      margin-bottom: 14px;
+    }
+
+    .summary-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .summary-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .summary-key {
+      color: #999;
+      min-width: 80px;
+      flex-shrink: 0;
+    }
+
+    .summary-value {
+      color: #1a1a1a;
+      font-weight: 500;
+    }
+
+    /* ── Next Steps ── */
+    .next-steps {
+      margin-bottom: 36px;
+    }
+
+    .next-steps .section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #aaa;
+      margin-bottom: 16px;
+    }
+
+    .step {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 14px;
+    }
+
+    .step-number {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background-color: #2c2c2c;
+      color: #0155be;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .step-text {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #444;
+    }
+
+    /* ── CTA ── */
+    .cta-block {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background-color: #2c2c2c;
+      color: #f0f2f5;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 16px 36px;
+      border-radius: 6px;
+    }
+
+    /* ── Divider ── */
+    .divider {
+      border: none;
+      border-top: 1px solid #ebebeb;
+      margin: 0 0 32px;
+    }
+
+    /* ── Signature ── */
+    .signature {
+      font-size: 14px;
+      line-height: 1.8;
+      color: #555;
+    }
+
+    .signature .name {
+      font-weight: 700;
+      color: #2c2c2c;
+      font-size: 15px;
+    }
+
+    .signature .contact-row {
+      margin-top: 6px;
+      font-size: 13px;
+      color: #888;
+    }
+
+    .signature .contact-row a {
+      color: #0155be;
+      text-decoration: none;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      background-color: #2c2c2c;
+      border-radius: 0 0 12px 12px;
+      padding: 28px 48px;
+      text-align: center;
+    }
+
+    .footer p {
+      font-size: 11px;
+      color: #556;
+      line-height: 1.7;
+    }
+
+    .footer .highlight {
+      color: #0155be;
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 480px) {
+      .header, .body, .footer { padding: 32px 24px; }
+      .header h1 { font-size: 20px; }
+      .summary-row { flex-direction: column; gap: 2px; }
+      .summary-key { min-width: unset; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+
+    <!-- Header -->
+    <div class="header">
+      <div class="brand">{{BUSINESS_NAME}}</div>
+      <h1>お問い合わせ<br>ありがとうございます<br><strong>Thank you for reaching out</strong></h1>
+    </div>
+
+    <!-- Body -->
+    <div class="body">
+
+      <p class="greeting">{{$json.name}} 様 / Dear {{$json.name}},</p>
+
+      <p class="message-text">
+        この度はお問い合わせいただき、誠にありがとうございます。<br>
+        内容を確認のうえ、<strong>24時間以内</strong>に担当者よりご連絡いたします。<br><br>
+        Thank you for contacting us. We have received your message and a member of our team will get back to you <strong>within 24 hours</strong>.
+      </p>
+
+      <!-- Inquiry Summary -->
+      <div class="summary-box">
+        <div class="summary-label">お問い合わせ内容 / Your Inquiry</div>
+
+        <div class="summary-row">
+          <span class="summary-key">お名前</span>
+          <span class="summary-value">{{$json.name}}</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-key">メール</span>
+          <span class="summary-value">{{$json.email}}</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-key">電話番号</span>
+          <span class="summary-value">{{$json.phone}}</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-key">内容</span>
+          <span class="summary-value">{{$json.message}}</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-key">受付日時</span>
+          <span class="summary-value">{{$json.timestamp}}</span>
+        </div>
+      </div>
+
+      <!-- Next Steps -->
+      <div class="next-steps">
+        <div class="section-label">次のステップ / What happens next</div>
+
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-text">
+            担当者がお問い合わせ内容を確認いたします。<br>
+            <em style="color:#aaa;">Our team reviews your inquiry.</em>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-text">
+            24時間以内にメールまたはお電話にてご連絡いたします。<br>
+            <em style="color:#aaa;">We contact you within 24 hours by email or phone.</em>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-text">
+            ご要望に合わせた最適なご提案をさせていただきます。<br>
+            <em style="color:#aaa;">We provide a solution tailored to your needs.</em>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="cta-block">
+        <a href="{{WEBSITE_URL}}" class="cta-button">ウェブサイトを見る / Visit Our Website</a>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- Signature -->
+      <div class="signature">
+        <p>どうぞよろしくお願いいたします。<br>Best regards,</p>
+        <br>
+        <p class="name">{{STAFF_NAME}}</p>
+        <p>{{BUSINESS_NAME}}</p>
+        <div class="contact-row">
+          📞 {{BUSINESS_PHONE}} &nbsp;|&nbsp;
+          🌐 <a href="{{WEBSITE_URL}}">{{WEBSITE_URL}}</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>
+        このメールは自動送信されています。返信は受け付けておりません。<br>
+        This is an automated message. Please do not reply directly to this email.<br><br>
+        <span class="highlight">Powered by Lead Capture Automation (RMARKBLE's) · Built with n8n</span>
+      </p>
+    </div>
+
+  </div>
+</body>
+</html>

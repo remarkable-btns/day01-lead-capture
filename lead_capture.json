@@ -1,0 +1,592 @@
+{
+  "name": "Day 01 - Lead Capture Automation",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lead-capture",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -96,
+        272
+      ],
+      "id": "68c3e696-a68f-4bab-b040-e8ccf21ff713",
+      "name": "Webhook",
+      "webhookId": "5b71e0b0-7542-4743-8442-306109c0a351"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1zq37RhxJftYmIko-dSRRIFkKRl4QsncjvGnjuDZ74TM",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1zq37RhxJftYmIko-dSRRIFkKRl4QsncjvGnjuDZ74TM/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $('Code for Cleaning Fields').item.json.body.name }}",
+            "Email": "={{ $('Code for Cleaning Fields').item.json.body.email }}",
+            "Phone": "={{ $('Code for Cleaning Fields').item.json.body.phone }}",
+            "Message": "={{ $('Code for Cleaning Fields').item.json.body.message }}",
+            "Timestap": "={{ $now.toISO() }}",
+            "Status": "New"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Phone",
+              "displayName": "Phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Message",
+              "displayName": "Message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Timestap",
+              "displayName": "Timestap",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1024,
+        272
+      ],
+      "id": "1f59c216-7066-4caa-a92d-08b6daa4ffea",
+      "name": "Append row in sheet",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "7CP8ZwczD3KXzad9",
+          "name": "Google Sheets OAuth2 API"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        -96,
+        64
+      ],
+      "id": "a98ccb73-9771-4302-bbcf-19c1d5e5c2cc",
+      "name": "There is an error"
+    },
+    {
+      "parameters": {
+        "sendTo": "markanthonyalatracajr@gmail.com",
+        "subject": "Error on Lead Automation ",
+        "emailType": "text",
+        "message": "Sheet append failed",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1248,
+        272
+      ],
+      "id": "8cecf23e-e721-4ed5-aeda-1e94cc3aedd0",
+      "name": "Send Append Error Message - Admin",
+      "webhookId": "42e7294f-b95a-4843-8457-6eadd1f1a7a3",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "m9rm4s5l9kG0r0AG",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Code for Cleaning Fields').item.json.body.email }}",
+        "subject": "={{ $('Code for Cleaning Fields').item.json.body.message }}",
+        "message": "=<p>{{ $('Code for Cleaning Fields').item.json.body.name }} 様</p>\n\n<p>\n  この度はお問い合わせいただきありがとうございます。<br>\n  担当者より24時間以内にご連絡いたします。\n</p>\n\n<p>\n  お問い合わせ内容：<br>\n  <em>{{ $('Code for Cleaning Fields').item.json.body.message }}</em>\n</p>\n\n<p>——<br>\nALC Reach<br>\nhttps://alcreach.mystrikingly.com/</p>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1024,
+        464
+      ],
+      "id": "25d9efa5-c85a-4600-977a-475f136f46d5",
+      "name": "Send Clean Message to Email",
+      "webhookId": "bf04c030-bca6-47b1-bbec-aab74de99005",
+      "executeOnce": true,
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "m9rm4s5l9kG0r0AG",
+          "name": "Gmail OAuth2 API"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "sendTo": "markanthonyalatracajr@gmail.com",
+        "subject": "Slack Error on Lead Automation",
+        "message": "Slack alert failed — check webhook URL.",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1248,
+        80
+      ],
+      "id": "e7bf1f63-7823-463f-8e81-5462d841bcaf",
+      "name": "Alert Admin of Slack Error",
+      "webhookId": "66ebdc94-aed7-4a0b-a73c-c0d6106d8f52",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "m9rm4s5l9kG0r0AG",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "markanthonyalatracajr@gmail.com",
+        "subject": "[rmarkble's] ⚠️ Lead Capture Failed ",
+        "emailType": "text",
+        "message": "=Error: {{ $json.error.message }}\nWorkflow: {{ $json.workflow.name }}\nTime: {{ $now.toISO() }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        128,
+        64
+      ],
+      "id": "fde663d9-9952-4f0d-8514-5d45b40e7bbd",
+      "name": "Send Workflow Error",
+      "webhookId": "53788cb9-2e58-48ed-881a-430e0886398d",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "m9rm4s5l9kG0r0AG",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "3e66229b-898d-4509-884c-eac102135828",
+              "leftValue": "={{ $json.body.email }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "bfd48040-abcf-4b05-b65b-8878a1b6eef6",
+              "leftValue": "={{ $json.body.name }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "0cd37552-400f-4818-aed4-fd9eda136d78",
+              "leftValue": "={{ $json.body.message }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        128,
+        272
+      ],
+      "id": "e401788b-eb4c-46d4-b2fe-b4b89b332313",
+      "name": "If No Empty Field"
+    },
+    {
+      "parameters": {
+        "jsCode": "const email = $input.first().json.body.email;\nconst emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;\n\nif (!emailRegex.test(email)) {\n  throw new Error(`Invalid email format: ${email}`);\n}\n\n// Sanitize name — strip HTML tags to prevent injection\nconst name = $input.first().json.body.name.replace(/<[^>]*>/g, '').trim();\nconst message = $input.first().json.body.message.replace(/<[^>]*>/g, '').trim();\n\nreturn [{\n  json: {\n    ...$input.first().json,\n    name,\n    message,\n    email: email.toLowerCase().trim()\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        352,
+        176
+      ],
+      "id": "28d7f7c0-0115-44ca-882d-f2994179dc30",
+      "name": "Code for Cleaning Fields"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{ \"error\": \"Missing required fields: name, email, or message\" }",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        352,
+        368
+      ],
+      "id": "ee8f4b70-9f32-4373-8390-cdf4920eb80a",
+      "name": "Respond to Webhook Error"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "a6321cf8-f61e-4d1d-a24a-e39bf4d1eff9",
+              "leftValue": "={{ $json.Email }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "608ccb99-2089-45a7-9fe7-7e158e5c9c80",
+              "leftValue": "",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        800,
+        176
+      ],
+      "id": "92e2f990-dc74-4984-a9ed-9756b3ab427a",
+      "name": "If Email Already Exists"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\n  \"status\": \"already_received\",\n  \"message\": \"お問い合わせは既に受け付けております\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1024,
+        -112
+      ],
+      "id": "f165cb55-54dd-4552-b665-7b82010aebae",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1zq37RhxJftYmIko-dSRRIFkKRl4QsncjvGnjuDZ74TM",
+          "mode": "list",
+          "cachedResultName": "Lead Capture CRM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1zq37RhxJftYmIko-dSRRIFkKRl4QsncjvGnjuDZ74TM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1zq37RhxJftYmIko-dSRRIFkKRl4QsncjvGnjuDZ74TM/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Email",
+              "lookupValue": "={{ $json.body.email }}"
+            }
+          ]
+        },
+        "options": {
+          "returnFirstMatch": false
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        576,
+        176
+      ],
+      "id": "7c5e6599-6576-4473-8730-4734d72cd42a",
+      "name": "Get Email row/s in sheet",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "7CP8ZwczD3KXzad9",
+          "name": "Google Sheets OAuth2 API"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C0BBXCUDCBY",
+          "mode": "list",
+          "cachedResultName": "leads"
+        },
+        "text": "=🔔 New Lead\nName: {{ $('Code for Cleaning Fields').item.json.body.name }}\nEmail: {{ $('Code for Cleaning Fields').item.json.body.email }}\nPhone: {{ $('Code for Cleaning Fields').item.json.body.phone }}\nMessage: {{ $('Code for Cleaning Fields').item.json.body.message }}\nTime: {{ $now.format('yyyy-MM-dd HH:mm') }} JST",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.5,
+      "position": [
+        1024,
+        80
+      ],
+      "id": "10998960-7ff4-4d2b-8235-4154162c14fc",
+      "name": "Alert Admin of new Lead",
+      "webhookId": "ff70442f-6825-425c-bd1d-9f0834660349",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "ruTOwg8kIQgJfGg8",
+          "name": "Slack OAuth2 API"
+        }
+      },
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "If No Empty Field",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Send Append Error Message - Admin",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "There is an error": {
+      "main": [
+        [
+          {
+            "node": "Send Workflow Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Clean Message to Email": {
+      "main": [
+        [],
+        []
+      ]
+    },
+    "If No Empty Field": {
+      "main": [
+        [
+          {
+            "node": "Code for Cleaning Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond to Webhook Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code for Cleaning Fields": {
+      "main": [
+        [
+          {
+            "node": "Get Email row/s in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Email Already Exists": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Alert Admin of new Lead",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send Clean Message to Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Email row/s in sheet": {
+      "main": [
+        [
+          {
+            "node": "If Email Already Exists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Alert Admin of new Lead": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Alert Admin of Slack Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "f24612e3-bf79-4d7e-a51f-d47bd61d3ab1",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4bcde95620e9535081ee0a6a4932d925a95199dbca3ba4c95efb826eb2b662eb"
+  },
+  "nodeGroups": [],
+  "id": "hSJBGgV4GuyGOJlv",
+  "tags": []
+}
